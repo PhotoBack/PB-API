@@ -1,6 +1,14 @@
 require 'rails_helper'
 
 RSpec.describe User, :type => :model do
+  describe "create" do
+    subject { FactoryGirl.create(:user) }
+
+    it "has many files" do
+      expect(subject.images.count).to be(5)
+    end
+  end
+
   describe "Omniauth" do
     before do
       User.create(:provider => 'google_oauth2', :uid => "777", :email => 'existing@example.com')
@@ -8,7 +16,8 @@ RSpec.describe User, :type => :model do
 
     subject { OmniAuth::AuthHash.new(:provider => 'google_oauth2',
                                      :uid => '1234',
-                                     :info => { :email => 'test@example.com' })}
+                                     :info => { :email => 'test@example.com' }) }
+
     it "gets creates a new user if the given user does not exist" do
       user = User.from_omniauth(subject)
 

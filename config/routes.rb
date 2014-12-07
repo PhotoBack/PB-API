@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'api/upload'
+
   # Root path
   root 'api_client#index'
 
